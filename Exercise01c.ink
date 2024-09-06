@@ -29,7 +29,8 @@ VAR health = 5
 VAR pet_name = ""
 VAR torches = 0
 VAR mask = 1
-VAR rock = 1
+VAR rock = 0
+VAR rose = 0
 
 -> memory
 
@@ -78,7 +79,7 @@ You are in the west tunnel. It is very dark, you can't see anything.
 == west_tunnel_lit ==
 The light of your torch reveals a beautiful assortment of glowing emerald rocks. You decide to pick one up. Who knows, it may be useful for later? Upon further inspection of this tunnel, you notice two separate pathways.
 + [Pathway 1] -> pathway_1
-+ [Pick up rock] -> rock_pickup
++ { rock == 0 }[Pick up rock] -> rock_pickup
 -> END
 
 
@@ -89,6 +90,7 @@ You notice an abstract stone sculpture at the end of this pathway. Upon closer i
 
 == rock_pickup ==
 You now have an glowing rock.
+~ rock = rock + 1
 * [Go Back] -> west_tunnel_lit
 
 
@@ -99,17 +101,28 @@ You now have a torch. May it light the way.
 -> END
 
 == east_tunnel_lit ==
-The light of your torch reveals a mysterious garden of roses. You think to yourself, "How are roses growing down here? Is this a sign from {pet_name}?" This garden of roses peaks your interest, so you decide to explore it more. However you notice it's a little dusty in here. 
+The light of your torch reveals a mysterious garden of glowing roses. You think to yourself, "How are roses growing down here?" The garden of roses peaks your interest, so you decide to explore it more. However you notice it's a little dusty in here. 
 + [Put on mask] -> east_tunnel_1
-+ [Continue exploration] -> east_tunnel_2
++ [Continue exploration without mask] -> east_tunnel_2
     
 -> END
 
 == east_tunnel_1 == 
-Thankfully you brough this mask with you, otherwise you would eventually struggle to breathe. Sometimes you forget you have asthma. 
+Thankfully you brough this mask with you. You put on the mask and continue your journey. But first, the roses are calling your name. Should you pick one up?
++ { rose == 0 }[Pick up rose] -> rose_pickup
++ [Continue exploration] -> continue_exploration
 -> END
 
 == east_tunnel_2 ==
 You decided that the level of dust in this cave doesn't seem like enough to warrant pulling out your mask. You decide to save it for later in case the dust gets worse.
 -> END 
+
+== rose_pickup ==
+You now have a beautiful rose. 
+~ rose = rose + 1
+* [Go Back] -> east_tunnel_1
+
+== continue_exploration ==
+You wonder if this rose will be of help to you later in your journey.
+-> END
 
